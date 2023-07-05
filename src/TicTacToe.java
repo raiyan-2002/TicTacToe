@@ -90,21 +90,14 @@ public class TicTacToe implements ActionListener {
 
                 xTurn = !xTurn;
 
-                int winningInt = checkWinner();
+                String winner = checkWinner();
 
-                if (winningInt != 0) {
-                    if (winningInt == 1) {
+                if (!winner.equals("")) {
+                    if (winner.equals(o)) {
                         title.setText("O wins!");
                     }
                     else {
                         title.setText("X wins!");
-                    }
-                    for (int k = 0 ; k < 9 ; k++) {
-
-                        if(buttons[k].getText().equals("")) {
-                            buttons[k].setEnabled(false);
-                        }
-
                     }
                 }
             }
@@ -122,7 +115,7 @@ public class TicTacToe implements ActionListener {
         return true;
     }
 
-    public int checkWinner() {
+    public String checkWinner() {
 
         String winner = "";
 
@@ -130,29 +123,38 @@ public class TicTacToe implements ActionListener {
 
             if (buttons[(3 * i)].getText().equals(buttons[(3 * i) + 1].getText()) && buttons[(3 * i)].getText().equals(buttons[(3 * i) + 2].getText()) && !buttons[(3 * i)].getText().equals("")) {
                 winner = buttons[3 * i].getText();
+                winnerBoard((3 * i), (3 * i) + 1, (3 * i) + 2);
             }
             if (buttons[i].getText().equals(buttons[i + 3].getText()) && buttons[i].getText().equals(buttons[i + 6].getText()) && !buttons[i].getText().equals("")) {
                 winner = buttons[i].getText();
+                winnerBoard(i, i + 3, i + 6);
             }
 
         }
 
         if (buttons[0].getText().equals(buttons[4].getText()) && buttons[0].getText().equals(buttons[8].getText()) && !buttons[0].getText().equals("")) {
             winner = buttons[0].getText();
+            winnerBoard(0, 4, 8);
         }
         if (buttons[2].getText().equals(buttons[4].getText()) && buttons[2].getText().equals(buttons[6].getText()) && !buttons[2].getText().equals("")) {
             winner = buttons[0].getText();
+            winnerBoard(2, 4, 6);
         }
 
-        if (winner.equals(o)) {
-            return 1;
-        }
-        else if (winner.equals(x)) {
-            return 2;
-        }
+        return winner;
+    }
 
-        return 0;
+    public void winnerBoard(int a, int b, int c) {
 
+        for (int i = 0 ; i < 9 ; i++) {
+
+            if (i != a && i != b && i != c) {
+                buttons[i].setEnabled(false);
+            }
+            else {
+                buttons[i].setForeground(Color.GREEN);
+            }
+        }
     }
 }
 
