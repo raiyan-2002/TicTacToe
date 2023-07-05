@@ -91,7 +91,23 @@ public class TicTacToe implements ActionListener {
 
                 xTurn = !xTurn;
 
+                int winningInt = checkWinner();
 
+                if (winningInt != 0) {
+                    if (winningInt == 1) {
+                        title.setText("O wins!");
+                    }
+                    else {
+                        title.setText("X wins!");
+                    }
+                    for (int k = 0 ; k < 9 ; k++) {
+
+                        if(buttons[k].getText().equals("")) {
+                            buttons[k].setEnabled(false);
+                        }
+
+                    }
+                }
             }
         }
     }
@@ -105,6 +121,39 @@ public class TicTacToe implements ActionListener {
             }
         }
         return true;
+    }
+
+    public int checkWinner() {
+
+        String winner = "";
+
+        for (int i = 0 ; i < 2 ; i++) {
+
+            if (buttons[(3 * i)].getText().equals(buttons[(3 * i) + 1].getText()) && buttons[(3 * i)].getText().equals(buttons[(3 * i) + 2].getText()) && !buttons[(3 * i)].getText().equals("")) {
+                winner = buttons[3 * i].getText();
+            }
+            if (buttons[i].getText().equals(buttons[i + 3].getText()) && buttons[i].getText().equals(buttons[i + 6].getText()) && !buttons[i].getText().equals("")) {
+                winner = buttons[i].getText();
+            }
+
+        }
+
+        if (buttons[0].getText().equals(buttons[4].getText()) && buttons[0].getText().equals(buttons[8].getText()) && !buttons[0].getText().equals("")) {
+            winner = buttons[0].getText();
+        }
+        if (buttons[2].getText().equals(buttons[4].getText()) && buttons[2].getText().equals(buttons[6].getText()) && !buttons[2].getText().equals("")) {
+            winner = buttons[0].getText();
+        }
+
+        if (winner.equals(o)) {
+            return 1;
+        }
+        else if (winner.equals(x)) {
+            return 2;
+        }
+
+        return 0;
+
     }
 }
 
